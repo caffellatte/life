@@ -1,8 +1,8 @@
-// LIFE //   pages/index.js
+// LIFE //  pages/about.js
 import Layout from '../components/MyLayout.js'
 
 export default () => (
     <Layout>
-       <p>Hello Next.js</p>
+       <p>This is the about page</p>
     </Layout>
 )
