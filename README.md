@@ -1,2 +1,3 @@
 # life
+
 The game "LIFE"
