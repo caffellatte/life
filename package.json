@@ -1,0 +1,29 @@
+{
+  "name": "life",
+  "workspaces": [
+    "packages/*"
+  ],
+  "version": "0.0.1",
+  "description": "The app is an implementation of the game Life in JavaScript",
+  "scripts": {
+    "build:client": "npm run -w client build",
+    "dev:client": "npm run -w client dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caffellatte/life.git"
+  },
+  "keywords": [
+    "Game",
+    "Life",
+    "JS",
+    "Backbone.js",
+    "Node.js"
+  ],
+  "author": "Mikhail Lutsenko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/caffellatte/life/issues"
+  },
+  "homepage": "https://github.com/caffellatte/life#readme"
+}
