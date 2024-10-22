@@ -2,7 +2,9 @@ const CellView = Backbone.View.extend({
   tagName: "li",
 
   render() {
-    this.$el.text(this.model.get("name"));
+    const name = this.model.get("name");
+    const textNode = document.createTextNode(name);
+    this.el.appendChild(textNode);
     return this;
   },
 });
