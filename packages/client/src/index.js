@@ -1,7 +1,5 @@
-import Backbone from "backbone";
-import $ from "jquery";
 import "./app";
 
-$(document).ready(() => {
+document.addEventListener("DOMContentLoaded", function () {
   console.log("App is ready!");
 });

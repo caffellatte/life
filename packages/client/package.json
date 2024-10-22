@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "backbone": "^1.6.0",
+    "imports-loader": "^5.0.0",
     "jquery": "^3.7.1",
     "underscore": "^1.13.7"
   }

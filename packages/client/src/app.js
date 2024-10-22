@@ -1,5 +1,4 @@
 import Backbone from "backbone";
-import $ from "jquery";
 
 import { Cells } from "./collections";
 import { CellView } from "./views";
@@ -15,12 +14,13 @@ const App = Backbone.View.extend({
   },
 
   render() {
-    const ul = $("<ul></ul>");
+    const ul = document.createElement("ul");
     cells.each((cell) => {
       const cellView = new CellView({ model: cell });
-      ul.append(cellView.render().el);
+      const cellComponent = cellView.render();
+      ul.appendChild(cellComponent.el);
     });
-    this.$el.append(ul);
+    this.el.appendChild(ul);
   },
 });
 
