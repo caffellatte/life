@@ -1,6 +1,10 @@
 const Cell = Backbone.Model.extend({
   defaults: {
-    name: "Item Name",
+    alive: false,
+  },
+
+  toggle() {
+    this.set("alive", !this.get("alive"));
   },
 
   /**
