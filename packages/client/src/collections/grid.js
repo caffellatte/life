@@ -9,7 +9,12 @@ const Grid = Backbone.Collection.extend({
     console.log("Grid.initialize -> cols:", cols);
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++) {
-        this.add(new Cell());
+        console.log("Grid.initialize: x=", i, "y=", j);
+        if (i >= 0 && j >= 0) {
+          const cell = new Cell({ x: i, y: j });
+          console.log("Grid.initialize: cell:", cell);
+          this.add(cell);
+        }
       }
     }
   },

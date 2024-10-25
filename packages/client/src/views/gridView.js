@@ -10,11 +10,13 @@ const GridView = Backbone.View.extend({
 
   render() {
     this.$el.empty();
+
     this.collection.each((cell, index) => {
+      console.log("GridView.cell:", cell);
       const cellElement = document.createElement("div");
       cellElement.className = cell.get("alive") ? "cell alive" : "cell";
       cellElement.addEventListener("click", () => cell.toggle());
-      this.$el.append(cellElement);
+      this.el.append(cellElement);
     });
     return this;
   },
