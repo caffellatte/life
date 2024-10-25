@@ -1,9 +1,10 @@
 import { Grid } from "./collections";
 import { GridView } from "./views";
 
-const rows = 20;
-const cols = 20;
+const rows = 10;
+const cols = 10;
 const grid = new Grid(rows, cols);
+console.log("App.grid:", grid);
 const gridView = new GridView({ collection: grid });
 
 function updateGame() {
