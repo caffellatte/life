@@ -1,18 +1,25 @@
-import { Grid } from "./collections";
+import $ from "jquery";
+import _ from "underscore";
+
+import { Cell } from "./models";
 import { GridView } from "./views";
+import { Grid } from "./collections";
 
-const rows = 10;
-const cols = 10;
-const grid = new Grid(rows, cols);
-console.log("App.grid:", grid);
-const gridView = new GridView({ collection: grid });
+$(function () {
+  var width = 20,
+    height = 20;
+  var cells = _.times(width * height, function () {
+    return new Cell();
+  });
 
-function updateGame() {
-  grid.updateGrid();
-}
+  var grid = new Grid(cells, { width: width, height: height });
+  var gridView = new GridView({ collection: grid });
 
-setInterval(updateGame, 1000);
+  $("body").append(gridView.render().el);
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.body.appendChild(gridView.el);
+  // Start the game
+  setInterval(function () {
+    console.log("grid.nextGeneration()");
+    grid.nextGeneration();
+  }, 10000);
 });
