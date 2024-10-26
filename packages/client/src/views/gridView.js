@@ -1,23 +1,19 @@
 import Backbone from "backbone";
+import CellView from "./cellView";
 
-const GridView = Backbone.View.extend({
-  el: "#grid",
+var GridView = Backbone.View.extend({
+  className: "grid",
 
-  initialize() {
-    this.listenTo(this.collection, "change", this.render);
-    this.render();
+  initialize: function () {
+    this.listenTo(this.collection, "reset", this.render);
   },
 
-  render() {
+  render: function () {
     this.$el.empty();
-
-    this.collection.each((cell, index) => {
-      console.log("GridView.cell:", cell);
-      const cellElement = document.createElement("div");
-      cellElement.className = cell.get("alive") ? "cell alive" : "cell";
-      cellElement.addEventListener("click", () => cell.toggle());
-      this.el.append(cellElement);
-    });
+    this.collection.each(function (cell) {
+      var cellView = new CellView({ model: cell });
+      this.$el.append(cellView.render().el);
+    }, this);
     return this;
   },
 });
