@@ -1,28 +1,35 @@
-const x = 10;
-const y = 10;
+const x = 8;
+const y = 8;
 
-const grid = [];
+function emptyGrid() {
+  const grid = [];
 
-for (let i = 0; i < x; i++) {
-  for (let j = 0; j < y; j++) {
-    grid.push({ x: i, y: j, alive: false });
+  for (let i = 0; i < x; i++) {
+    for (let j = 0; j < y; j++) {
+      grid.push({ x: i, y: j, alive: false });
+    }
   }
+
+  return grid;
 }
 
 function setInitial(grid) {
-  grid[10].alive = true;
-  grid[11].alive = true;
-  grid[12].alive = true;
+  grid[33].alive = true;
+  grid[34].alive = true;
+  grid[35].alive = true;
 }
 
 function displayGrid(grid) {
-  let layout = "";
+  let layout = "   ";
 
+  for (let j = 0; j < y; j++) {
+    layout += j.toString();
+  }
   for (let i = 0; i < x; i++) {
     for (let j = 0; j < y; j++) {
       layout += grid[j + i * x].alive ? "X" : " ";
     }
-    layout += "\n";
+    layout += "\n" + i + " |";
   }
 
   return layout;
@@ -97,13 +104,35 @@ function getNeighbours(cell) {
     }, 0);
 }
 
+let grid = emptyGrid();
+
 setInitial(grid);
 
-console.log(displayGrid(grid));
-
-grid.forEach((cell) => {
-  const neighbours = getNeighbours(cell);
-  if (cell.alive === false && neighbours === 3) {
-    cell.alive = true;
+function tick() {
+  console.log(displayGrid(grid));
+  const newGrid = emptyGrid();
+  for (const cell of grid) {
+    const { x, y } = cell;
+    // console.log("x=", x);
+    // console.log("y=", y);
+    const indexOfCell = grid.findIndex((cell) => cell.x === x && cell.y === y);
+    // console.log("indexOfCell=", indexOfCell);
+    const neighbours = getNeighbours(cell);
+    // console.log("neighbours=", neighbours);
+    if (cell.alive === false && neighbours === 3) {
+      newGrid[indexOfCell].alive = true;
+      continue;
+    }
+    if (cell.alive === true && (neighbours === 3 || neighbours === 2)) {
+      newGrid[indexOfCell].alive = true;
+    } else {
+      newGrid[indexOfCell].alive = false;
+    }
   }
-});
+  return newGrid;
+}
+
+setInterval(() => {
+  console.clear();
+  grid = tick();
+}, 2000);
