@@ -40,51 +40,51 @@ function getNeighbours(cell) {
   /**
    * 1
    */
-  const neighbourOne = grid.find(
-    (cell) => cell.x === x - 1 && cell.y === y - 1
-  )?.alive;
+  const neighbourOne = grid.find((cell) => {
+    return cell.x === x - 1 && cell.y === y - 1;
+  })?.alive;
   /**
    * 2
    */
-  const neighbourTwo = grid.find(
-    (cell) => cell.x === x && cell.y === y - 1
-  )?.alive;
+  const neighbourTwo = grid.find((cell) => {
+    return cell.x === x && cell.y === y - 1;
+  })?.alive;
   /**
    * 3
    */
-  const neighbourThree = grid.find(
-    (cell) => cell.x === x + 1 && cell.y === y - 1
-  )?.alive;
+  const neighbourThree = grid.find((cell) => {
+    return cell.x === x + 1 && cell.y === y - 1;
+  })?.alive;
   /**
    * 4
    */
-  const neighbourFour = grid.find(
-    (cell) => cell.x === x - 1 && cell.y === y
-  )?.alive;
+  const neighbourFour = grid.find((cell) => {
+    return cell.x === x - 1 && cell.y === y;
+  })?.alive;
   /**
    * 5
    */
-  const neighbourFive = grid.find(
-    (cell) => cell.x === x + 1 && cell.y === y
-  )?.alive;
+  const neighbourFive = grid.find((cell) => {
+    return cell.x === x + 1 && cell.y === y;
+  })?.alive;
   /**
    * 6
    */
-  const neighbourSix = grid.find(
-    (cell) => cell.x === x - 1 && cell.y === y + 1
-  )?.alive;
+  const neighbourSix = grid.find((cell) => {
+    return cell.x === x - 1 && cell.y === y + 1;
+  })?.alive;
   /**
    * 7
    */
-  const neighbourSeven = grid.find(
-    (cell) => cell.x === x && cell.y === y + 1
-  )?.alive;
+  const neighbourSeven = grid.find((cell) => {
+    return cell.x === x && cell.y === y + 1;
+  })?.alive;
   /**
    * 8
    */
-  const neighbourEight = grid.find(
-    (cell) => cell.x === x + 1 && cell.y === y + 1
-  )?.alive;
+  const neighbourEight = grid.find((cell) => {
+    return cell.x === x + 1 && cell.y === y + 1;
+  })?.alive;
 
   const neighbours = [
     neighbourOne,
