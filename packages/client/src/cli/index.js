@@ -1,5 +1,5 @@
-const x = 8;
-const y = 8;
+const x = 10;
+const y = 10;
 
 function emptyGrid() {
   const grid = [];
@@ -14,9 +14,21 @@ function emptyGrid() {
 }
 
 function setInitial(grid) {
+  /**
+   * First test
+   */
+  // grid[33].alive = true;
+  // grid[34].alive = true;
+  // grid[35].alive = true;
+
+  /**
+   * Glider
+   */
+  grid[13].alive = true;
+  grid[21].alive = true;
+  grid[23].alive = true;
+  grid[32].alive = true;
   grid[33].alive = true;
-  grid[34].alive = true;
-  grid[35].alive = true;
 }
 
 function displayGrid(grid) {
