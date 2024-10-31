@@ -1,0 +1,17 @@
+{
+  "name": "cli",
+  "version": "0.0.1",
+  "description": "Game of Life CLI version",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "keywords": [
+    "game",
+    "life",
+    "cli",
+    "javascript"
+  ],
+  "author": "Mikhail Lutsenko",
+  "license": "MIT"
+}
