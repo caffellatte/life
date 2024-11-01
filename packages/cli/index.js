@@ -1,3 +1,5 @@
+import chalk from "chalk";
+
 const width = 10;
 const height = 10;
 
@@ -273,7 +275,7 @@ let grid = emptyGrid(width, height);
 setInitial(grid);
 
 function tick(width, height) {
-  console.log(displayGrid(grid, width, height));
+  console.log(chalk.blue(displayGrid(grid, width, height)));
   const newGrid = emptyGrid(width, height);
   for (const cell of grid) {
     const { x, y } = cell;
