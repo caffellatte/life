@@ -3,6 +3,8 @@ import chalk from "chalk";
 const width = 10;
 const height = 10;
 
+let population = 0;
+
 function emptyGrid(width, height) {
   const grid = [];
 
@@ -275,6 +277,8 @@ let grid = emptyGrid(width, height);
 setInitial(grid);
 
 function tick(width, height) {
+  population = 0;
+
   console.log(chalk.blue(displayGrid(grid, width, height)));
   const newGrid = emptyGrid(width, height);
   for (const cell of grid) {
@@ -287,10 +291,12 @@ function tick(width, height) {
     // console.log("neighbours=", neighbours);
     if (cell.alive === false && neighbours === 3) {
       newGrid[indexOfCell].alive = true;
+      population++;
       continue;
     }
     if (cell.alive === true && (neighbours === 3 || neighbours === 2)) {
       newGrid[indexOfCell].alive = true;
+      population++;
     } else {
       newGrid[indexOfCell].alive = false;
     }
@@ -301,4 +307,5 @@ function tick(width, height) {
 setInterval(() => {
   console.clear();
   grid = tick(width, height);
+  console.log(chalk.green("POPULATION = ", population));
 }, 2000);
