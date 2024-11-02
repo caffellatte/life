@@ -279,7 +279,6 @@ setInitial(grid);
 function tick(width, height) {
   population = 0;
 
-  console.log(chalk.blue(displayGrid(grid, width, height)));
   const newGrid = emptyGrid(width, height);
   for (const cell of grid) {
     const { x, y } = cell;
@@ -307,5 +306,6 @@ function tick(width, height) {
 setInterval(() => {
   console.clear();
   grid = tick(width, height);
+  console.log(chalk.blue(displayGrid(grid, width, height)));
   console.log(chalk.green("POPULATION = ", population));
 }, 2000);
