@@ -37,11 +37,11 @@ function setInitial(grid) {
   /**
    * Glider
    */
-  grid[13].alive = true;
+  grid[1].alive = true;
+  grid[12].alive = true;
+  grid[20].alive = true;
   grid[21].alive = true;
-  grid[23].alive = true;
-  grid[32].alive = true;
-  grid[33].alive = true;
+  grid[22].alive = true;
 }
 
 function displayGrid(grid, width, height) {
