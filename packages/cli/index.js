@@ -1,4 +1,13 @@
 import chalk from "chalk";
+import readline from "readline";
+
+const TIMER = 2000;
+
+readline.emitKeypressEvents(process.stdin);
+process.stdin.setRawMode(true);
+
+console.log(chalk.bgGreenBright('Press "p" to Play'));
+console.log(chalk.bgRedBright('Press "s" to Stop'));
 
 const width = 10;
 const height = 10;
@@ -303,9 +312,47 @@ function tick(width, height) {
   return newGrid;
 }
 
-setInterval(() => {
+const gameLoop = () => {
   console.clear();
   grid = tick(width, height);
   console.log(chalk.blue(displayGrid(grid, width, height)));
   console.log(chalk.green("POPULATION = ", population));
-}, 2000);
+};
+
+let intervalId;
+
+const startGame = () => {
+  if (!intervalId) {
+    intervalId = setInterval(() => {
+      gameLoop();
+    }, TIMER);
+    console.log("Game started.");
+  } else {
+    console.log("Game is already running.");
+  }
+};
+
+const stopGame = () => {
+  if (intervalId) {
+    clearInterval(intervalId);
+    intervalId = null;
+    console.log("Game stopped.");
+  } else {
+    console.log("No game is currently running.");
+  }
+};
+
+process.stdin.on("keypress", (str, key) => {
+  if (key.name === "p") {
+    console.log('You pressed "p"!');
+    startGame();
+  } else if (key.name === "s") {
+    console.log('You pressed "s". Stopping...');
+    stopGame();
+  } else if (key.ctrl && key.name === "c") {
+    console.log("Exiting...");
+    process.exit();
+  } else {
+    console.log(`You pressed "${str}"`);
+  }
+});
