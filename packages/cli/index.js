@@ -12,7 +12,9 @@ console.log(chalk.bgRedBright('Press "s" to Stop'));
 const width = 10;
 const height = 10;
 
-let population = 0;
+const stats = {
+  population: 0,
+};
 
 function emptyGrid(width, height) {
   const grid = [];
@@ -286,7 +288,7 @@ let grid = emptyGrid(width, height);
 setInitial(grid);
 
 function tick(width, height) {
-  population = 0;
+  stats.population = 0;
 
   const newGrid = emptyGrid(width, height);
   for (const cell of grid) {
@@ -299,12 +301,12 @@ function tick(width, height) {
     // console.log("neighbours=", neighbours);
     if (cell.alive === false && neighbours === 3) {
       newGrid[indexOfCell].alive = true;
-      population++;
+      stats.population++;
       continue;
     }
     if (cell.alive === true && (neighbours === 3 || neighbours === 2)) {
       newGrid[indexOfCell].alive = true;
-      population++;
+      stats.population++;
     } else {
       newGrid[indexOfCell].alive = false;
     }
@@ -316,7 +318,7 @@ const gameLoop = () => {
   console.clear();
   grid = tick(width, height);
   console.log(chalk.blue(displayGrid(grid, width, height)));
-  console.log(chalk.green("POPULATION = ", population));
+  console.log(chalk.green("POPULATION = ", stats.population));
 };
 
 let intervalId;
