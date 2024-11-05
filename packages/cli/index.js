@@ -32,476 +32,272 @@ function setInitial(grid) {
   /**
    * First test
    */
-  // grid[33].alive = true;
-  // grid[34].alive = true;
-  // grid[35].alive = true;
+  grid[33].alive = true;
+  grid[34].alive = true;
+  grid[35].alive = true;
 
   /**
    * Glider
    */
-  grid[1].alive = true;
-  grid[12].alive = true;
-  grid[20].alive = true;
-  grid[21].alive = true;
-  grid[22].alive = true;
+  // grid[1].alive = true;
+  // grid[12].alive = true;
+  // grid[20].alive = true;
+  // grid[21].alive = true;
+  // grid[22].alive = true;
 }
 
 function displayGrid(grid, width, height) {
+  const area = defineArea(grid);
+  console.log("area", area);
+
   let layout = "   ";
 
-  for (let j = 0; j < height; j++) {
-    layout += j.toString();
+  for (let k = 0; k < width; k++) {
+    layout += k.toString();
   }
-  for (let i = 0; i < width; i++) {
-    for (let j = 0; j < height; j++) {
-      layout += grid[j + i * width].alive ? "X" : " ";
-    }
+
+  for (let i = 0; i < height; i++) {
     layout += "\n" + i + " |";
+    for (let j = 0; j < width; j++) {
+      const index = j + i * height;
+      if (grid[index].alive) {
+        console.log(grid[index], index);
+        layout += "#";
+      } else {
+        const areaCell = area.find((cell) => cell.x === j && cell.y === i);
+        if (areaCell) {
+          layout += "*";
+        } else {
+          layout += " ";
+        }
+      }
+    }
   }
 
   return layout;
 }
 
-function getNeighboursCount(cell, width, height) {
-  const { x, y } = cell;
-  /**
-   * 1
-   */
-  const neighbourOne = grid.find((cell) => {
-    let neighbourOneX = x - 1;
-    let neighbourOneY = y - 1;
+function getNeighboursCount(grid, cell, width, height) {
+  console.log("cell", cell);
 
-    if (neighbourOneX < 0) {
-      neighbourOneX = width - 1;
-    }
+  const neighbours = getNeighbours(grid, cell, width, height);
 
-    if (neighbourOneY < 0) {
-      neighbourOneY = height - 1;
-    }
+  console.log("neighbours:", neighbours);
 
-    if (neighbourOneX > width + 1) {
-      neighbourOneX = 0;
-    }
-
-    if (neighbourOneY > height + 1) {
-      neighbourOneY = 0;
-    }
-
-    return cell.x === neighbourOneX && cell.y === neighbourOneY;
-  })?.alive;
-  /**
-   * 2
-   */
-  const neighbourTwo = grid.find((cell) => {
-    let neighbourOneX = x;
-    let neighbourOneY = y - 1;
-
-    if (neighbourOneX < 0) {
-      neighbourOneX = width - 1;
-    }
-
-    if (neighbourOneY < 0) {
-      neighbourOneY = height - 1;
-    }
-
-    if (neighbourOneX > width + 1) {
-      neighbourOneX = 0;
-    }
-
-    if (neighbourOneY > height + 1) {
-      neighbourOneY = 0;
-    }
-
-    return cell.x === neighbourOneX && cell.y === neighbourOneY;
-  })?.alive;
-  /**
-   * 3
-   */
-  const neighbourThree = grid.find((cell) => {
-    let neighbourOneX = x + 1;
-    let neighbourOneY = y - 1;
-
-    if (neighbourOneX < 0) {
-      neighbourOneX = width - 1;
-    }
-
-    if (neighbourOneY < 0) {
-      neighbourOneY = height - 1;
-    }
-
-    if (neighbourOneX > width + 1) {
-      neighbourOneX = 0;
-    }
-
-    if (neighbourOneY > height + 1) {
-      neighbourOneY = 0;
-    }
-
-    return cell.x === neighbourOneX && cell.y === neighbourOneY;
-  })?.alive;
-  /**
-   * 4
-   */
-  const neighbourFour = grid.find((cell) => {
-    let neighbourOneX = x - 1;
-    let neighbourOneY = y;
-
-    if (neighbourOneX < 0) {
-      neighbourOneX = width - 1;
-    }
-
-    if (neighbourOneY < 0) {
-      neighbourOneY = height - 1;
-    }
-
-    if (neighbourOneX > width + 1) {
-      neighbourOneX = 0;
-    }
-
-    if (neighbourOneY > height + 1) {
-      neighbourOneY = 0;
-    }
-
-    return cell.x === neighbourOneX && cell.y === neighbourOneY;
-  })?.alive;
-  /**
-   * 5
-   */
-  const neighbourFive = grid.find((cell) => {
-    let neighbourOneX = x + 1;
-    let neighbourOneY = y;
-
-    if (neighbourOneX < 0) {
-      neighbourOneX = width - 1;
-    }
-
-    if (neighbourOneY < 0) {
-      neighbourOneY = height - 1;
-    }
-
-    if (neighbourOneX > width + 1) {
-      neighbourOneX = 0;
-    }
-
-    if (neighbourOneY > height + 1) {
-      neighbourOneY = 0;
-    }
-
-    return cell.x === neighbourOneX && cell.y === neighbourOneY;
-  })?.alive;
-  /**
-   * 6
-   */
-  const neighbourSix = grid.find((cell) => {
-    let neighbourOneX = x - 1;
-    let neighbourOneY = y + 1;
-
-    if (neighbourOneX < 0) {
-      neighbourOneX = width - 1;
-    }
-
-    if (neighbourOneY < 0) {
-      neighbourOneY = height - 1;
-    }
-
-    if (neighbourOneX > width + 1) {
-      neighbourOneX = 0;
-    }
-
-    if (neighbourOneY > height + 1) {
-      neighbourOneY = 0;
-    }
-
-    return cell.x === neighbourOneX && cell.y === neighbourOneY;
-  })?.alive;
-  /**
-   * 7
-   */
-  const neighbourSeven = grid.find((cell) => {
-    let neighbourOneX = x;
-    let neighbourOneY = y + 1;
-
-    if (neighbourOneX < 0) {
-      neighbourOneX = width - 1;
-    }
-
-    if (neighbourOneY < 0) {
-      neighbourOneY = height - 1;
-    }
-
-    if (neighbourOneX > width + 1) {
-      neighbourOneX = 0;
-    }
-
-    if (neighbourOneY > height + 1) {
-      neighbourOneY = 0;
-    }
-
-    return cell.x === neighbourOneX && cell.y === neighbourOneY;
-  })?.alive;
-  /**
-   * 8
-   */
-  const neighbourEight = grid.find((cell) => {
-    let neighbourOneX = x + 1;
-    let neighbourOneY = y + 1;
-
-    if (neighbourOneX < 0) {
-      neighbourOneX = width - 1;
-    }
-
-    if (neighbourOneY < 0) {
-      neighbourOneY = height - 1;
-    }
-
-    if (neighbourOneX > width + 1) {
-      neighbourOneX = 0;
-    }
-
-    if (neighbourOneY > height + 1) {
-      neighbourOneY = 0;
-    }
-
-    return cell.x === neighbourOneX && cell.y === neighbourOneY;
-  })?.alive;
-
-  const neighbours = [
-    neighbourOne,
-    neighbourTwo,
-    neighbourThree,
-    neighbourFour,
-    neighbourFive,
-    neighbourSix,
-    neighbourSeven,
-    neighbourEight,
-  ];
+  console.log(
+    "neighbours map:",
+    neighbours.map((neighbour) => Boolean(neighbour.alive))
+  );
 
   return neighbours
-    .map((neighbour) => Boolean(neighbour))
+    .map((neighbour) => Boolean(neighbour.alive))
     .reduce((previousValue, currentValue) => {
       return previousValue + Number(currentValue);
     }, 0);
 }
 
-function getNeighbours(cell, width, height) {
+function getNeighbours(grid, cell, width, height) {
   const { x, y } = cell;
-  console.log("x =", x);
-  console.log("y =", y);
+
   /**
    * 1
    */
   const neighbourOne = grid.find((cell) => {
-    let neighbourOneX = x - 1;
-    let neighbourOneY = y - 1;
+    let positionX = x - 1;
+    let positionY = y - 1;
 
-    if (neighbourOneX < 0) {
-      neighbourOneX = width - 1;
+    if (positionX < 0) {
+      positionX = width - 1;
     }
 
-    if (neighbourOneY < 0) {
-      neighbourOneY = height - 1;
+    if (positionY < 0) {
+      positionY = height - 1;
     }
 
-    if (neighbourOneX > width + 1) {
-      neighbourOneX = 0;
+    if (positionX > width - 1) {
+      positionX = 0;
     }
 
-    if (neighbourOneY > height + 1) {
-      neighbourOneY = 0;
+    if (positionY > height - 1) {
+      positionY = 0;
     }
-    console.log("neighbourOneX", neighbourOneX);
-    console.log("neighbourOneY", neighbourOneY);
 
-    return cell.x === neighbourOneX && cell.y === neighbourOneY;
+    return cell.x === positionX && cell.y === positionY;
   });
   /**
    * 2
    */
   const neighbourTwo = grid.find((cell) => {
-    let neighbourOneX = x;
-    let neighbourOneY = y - 1;
+    let positionX = x;
+    let positionY = y - 1;
 
-    if (neighbourOneX < 0) {
-      neighbourOneX = width - 1;
+    if (positionX < 0) {
+      positionX = width - 1;
     }
 
-    if (neighbourOneY < 0) {
-      neighbourOneY = height - 1;
+    if (positionY < 0) {
+      positionY = height - 1;
     }
 
-    if (neighbourOneX > width + 1) {
-      neighbourOneX = 0;
+    if (positionX > width - 1) {
+      positionX = 0;
     }
 
-    if (neighbourOneY > height + 1) {
-      neighbourOneY = 0;
+    if (positionY > height - 1) {
+      positionY = 0;
     }
 
-    console.log("neighbourOneX", neighbourOneX);
-    console.log("neighbourOneY", neighbourOneY);
-    return cell.x === neighbourOneX && cell.y === neighbourOneY;
+    return cell.x === positionX && cell.y === positionY;
   });
   /**
    * 3
    */
   const neighbourThree = grid.find((cell) => {
-    let neighbourOneX = x + 1;
-    let neighbourOneY = y - 1;
+    let positionX = x + 1;
+    let positionY = y - 1;
 
-    if (neighbourOneX < 0) {
-      neighbourOneX = width - 1;
+    if (positionX < 0) {
+      positionX = width - 1;
     }
 
-    if (neighbourOneY < 0) {
-      neighbourOneY = height - 1;
+    if (positionY < 0) {
+      positionY = height - 1;
     }
 
-    if (neighbourOneX > width + 1) {
-      neighbourOneX = 0;
+    if (positionX > width - 1) {
+      positionX = 0;
     }
 
-    if (neighbourOneY > height + 1) {
-      neighbourOneY = 0;
+    if (positionY > height - 1) {
+      positionY = 0;
     }
 
-    console.log("neighbourOneX", neighbourOneX);
-    console.log("neighbourOneY", neighbourOneY);
-    return cell.x === neighbourOneX && cell.y === neighbourOneY;
+    return cell.x === positionX && cell.y === positionY;
   });
   /**
    * 4
    */
   const neighbourFour = grid.find((cell) => {
-    let neighbourOneX = x - 1;
-    let neighbourOneY = y;
+    let positionX = x - 1;
+    let positionY = y;
 
-    if (neighbourOneX < 0) {
-      neighbourOneX = width - 1;
+    if (positionX < 0) {
+      positionX = width - 1;
     }
 
-    if (neighbourOneY < 0) {
-      neighbourOneY = height - 1;
+    if (positionY < 0) {
+      positionY = height - 1;
     }
 
-    if (neighbourOneX > width + 1) {
-      neighbourOneX = 0;
+    if (positionX > width - 1) {
+      positionX = 0;
     }
 
-    if (neighbourOneY > height + 1) {
-      neighbourOneY = 0;
+    if (positionY > height - 1) {
+      positionY = 0;
     }
 
-    console.log("neighbourOneX", neighbourOneX);
-    console.log("neighbourOneY", neighbourOneY);
-    return cell.x === neighbourOneX && cell.y === neighbourOneY;
+    return cell.x === positionX && cell.y === positionY;
   });
   /**
    * 5
    */
   const neighbourFive = grid.find((cell) => {
-    let neighbourOneX = x + 1;
-    let neighbourOneY = y;
+    let positionX = x + 1;
+    let positionY = y;
 
-    if (neighbourOneX < 0) {
-      neighbourOneX = width - 1;
+    if (positionX < 0) {
+      positionX = width - 1;
     }
 
-    if (neighbourOneY < 0) {
-      neighbourOneY = height - 1;
+    if (positionY < 0) {
+      positionY = height - 1;
     }
 
-    if (neighbourOneX > width + 1) {
-      neighbourOneX = 0;
+    if (positionX > width - 1) {
+      positionX = 0;
     }
 
-    if (neighbourOneY > height + 1) {
-      neighbourOneY = 0;
+    if (positionY > height - 1) {
+      positionY = 0;
     }
 
-    console.log("neighbourOneX", neighbourOneX);
-    console.log("neighbourOneY", neighbourOneY);
-    return cell.x === neighbourOneX && cell.y === neighbourOneY;
+    return cell.x === positionX && cell.y === positionY;
   });
   /**
    * 6
    */
   const neighbourSix = grid.find((cell) => {
-    let neighbourOneX = x - 1;
-    let neighbourOneY = y + 1;
+    let positionX = x - 1;
+    let positionY = y + 1;
 
-    if (neighbourOneX < 0) {
-      neighbourOneX = width - 1;
+    if (positionX < 0) {
+      positionX = width - 1;
     }
 
-    if (neighbourOneY < 0) {
-      neighbourOneY = height - 1;
+    if (positionY < 0) {
+      positionY = height - 1;
     }
 
-    if (neighbourOneX > width + 1) {
-      neighbourOneX = 0;
+    if (positionX > width - 1) {
+      positionX = 0;
     }
 
-    if (neighbourOneY > height + 1) {
-      neighbourOneY = 0;
+    if (positionY > height - 1) {
+      positionY = 0;
     }
 
-    console.log("neighbourOneX", neighbourOneX);
-    console.log("neighbourOneY", neighbourOneY);
-    return cell.x === neighbourOneX && cell.y === neighbourOneY;
+    return cell.x === positionX && cell.y === positionY;
   });
   /**
    * 7
    */
   const neighbourSeven = grid.find((cell) => {
-    let neighbourOneX = x;
-    let neighbourOneY = y + 1;
+    let positionX = x;
+    let positionY = y + 1;
 
-    if (neighbourOneX < 0) {
-      neighbourOneX = width - 1;
+    if (positionX < 0) {
+      positionX = width - 1;
     }
 
-    if (neighbourOneY < 0) {
-      neighbourOneY = height - 1;
+    if (positionY < 0) {
+      positionY = height - 1;
     }
 
-    if (neighbourOneX > width + 1) {
-      neighbourOneX = 0;
+    if (positionX > width - 1) {
+      positionX = 0;
     }
 
-    if (neighbourOneY > height + 1) {
-      neighbourOneY = 0;
+    if (positionY > height - 1) {
+      positionY = 0;
     }
 
-    console.log("neighbourOneX", neighbourOneX);
-    console.log("neighbourOneY", neighbourOneY);
-    return cell.x === neighbourOneX && cell.y === neighbourOneY;
+    return cell.x === positionX && cell.y === positionY;
   });
   /**
    * 8
    */
   const neighbourEight = grid.find((cell) => {
-    let neighbourOneX = x + 1;
-    let neighbourOneY = y + 1;
+    let positionX = x + 1;
+    let positionY = y + 1;
 
-    if (neighbourOneX < 0) {
-      neighbourOneX = width - 1;
+    if (positionX < 0) {
+      positionX = width - 1;
     }
 
-    if (neighbourOneY < 0) {
-      neighbourOneY = height - 1;
+    if (positionY < 0) {
+      positionY = height - 1;
     }
 
-    if (neighbourOneX > width + 1) {
-      neighbourOneX = 0;
+    if (positionX > width - 1) {
+      positionX = 0;
     }
 
-    if (neighbourOneY > height + 1) {
-      neighbourOneY = 0;
+    if (positionY > height - 1) {
+      positionY = 0;
     }
 
-    console.log("neighbourOneX", neighbourOneX);
-    console.log("neighbourOneY", neighbourOneY);
-    return cell.x === neighbourOneX && cell.y === neighbourOneY;
+    return cell.x === positionX && cell.y === positionY;
   });
 
   const neighbours = [
@@ -518,59 +314,57 @@ function getNeighbours(cell, width, height) {
   return neighbours;
 }
 
-function defineArea(alive) {
-  console.log("alive:", alive);
+function defineArea(grid) {
+  const alive = grid.filter((cell) => cell.alive);
+  console.log("alive", alive);
+
+  let temp = [];
 
   for (const cell of alive) {
-    const neighbours = getNeighbours(cell);
-    console.log("cell:", cell);
-    console.log("neighbours:", neighbours);
-    console.log("---------------------\n");
-    process.exit();
+    const neighbours = getNeighbours(grid, cell, width, height);
+    temp = temp.concat(temp, neighbours);
   }
+
+  const area = temp
+    .filter((item) => item.alive === false)
+    .filter(
+      (item, index, self) =>
+        index === self.findIndex((t) => t.x === item.x && t.y === item.y)
+    );
+
+  return area;
 }
 
-let grid = emptyGrid(width, height);
-
-let area = [];
-
-setInitial(grid);
-
-function tick(width, height) {
+function tick(grid, width, height) {
   stats.population = 0;
-
-  const alive = grid.filter((cell) => cell.alive);
-
-  defineArea(alive);
 
   const newGrid = emptyGrid(width, height);
 
-  for (const cell of grid) {
-    const { x, y } = cell;
-    // console.log("x=", x);
-    // console.log("y=", y);
-    const indexOfCell = grid.findIndex((cell) => cell.x === x && cell.y === y);
-    // console.log("indexOfCell=", indexOfCell);
-    const neighbours = getNeighboursCount(cell, width, height);
-    // console.log("neighbours=", neighbours);
-    if (cell.alive === false && neighbours === 3) {
-      newGrid[indexOfCell].alive = true;
-      stats.population++;
-      continue;
-    }
-    if (cell.alive === true && (neighbours === 3 || neighbours === 2)) {
-      newGrid[indexOfCell].alive = true;
+  for (let i = 0; i < grid.length; i++) {
+    const neighbours = getNeighboursCount(grid, grid[i], width, height);
+    if (grid[i].alive === false && neighbours === 3) {
+      newGrid[i].alive = true;
       stats.population++;
     } else {
-      newGrid[indexOfCell].alive = false;
+      if (grid[i].alive === true && (neighbours === 3 || neighbours === 2)) {
+        newGrid[i].alive = true;
+        stats.population++;
+      } else {
+        newGrid[i].alive = false;
+      }
     }
   }
+
   return newGrid;
 }
+let grid = emptyGrid(width, height);
+
+setInitial(grid);
 
 const gameLoop = () => {
   console.clear();
-  grid = tick(width, height);
+  grid = tick(grid, width, height);
+
   console.log(chalk.blue(displayGrid(grid, width, height)));
   console.log(chalk.green("POPULATION = ", stats.population));
 };
