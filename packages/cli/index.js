@@ -32,9 +32,9 @@ function setInitial(grid) {
   /**
    * First test
    */
-  grid[33].alive = true;
-  grid[34].alive = true;
-  grid[35].alive = true;
+  // grid[33].alive = true;
+  // grid[34].alive = true;
+  // grid[35].alive = true;
 
   /**
    * Glider
@@ -44,6 +44,14 @@ function setInitial(grid) {
   // grid[20].alive = true;
   // grid[21].alive = true;
   // grid[22].alive = true;
+
+  /**
+   * Cube
+   */
+  grid[12].alive = true;
+  grid[13].alive = true;
+  grid[22].alive = true;
+  grid[23].alive = true;
 }
 
 function displayGrid(grid, width, height) {
