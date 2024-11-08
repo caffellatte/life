@@ -39,19 +39,19 @@ function setInitial(grid) {
   /**
    * Glider
    */
-  // grid[1].alive = true;
-  // grid[12].alive = true;
-  // grid[20].alive = true;
-  // grid[21].alive = true;
-  // grid[22].alive = true;
+  grid[1].alive = true;
+  grid[12].alive = true;
+  grid[20].alive = true;
+  grid[21].alive = true;
+  grid[22].alive = true;
 
   /**
    * Cube
    */
-  grid[12].alive = true;
-  grid[13].alive = true;
-  grid[22].alive = true;
-  grid[23].alive = true;
+  // grid[12].alive = true;
+  // grid[13].alive = true;
+  // grid[22].alive = true;
+  // grid[23].alive = true;
 }
 
 function displayGrid(grid, width, height) {
@@ -333,12 +333,14 @@ function defineArea(grid) {
     temp = temp.concat(temp, neighbours);
   }
 
+  // Rotate `area`
   const area = temp
     .filter((item) => item.alive === false)
     .filter(
       (item, index, self) =>
         index === self.findIndex((t) => t.x === item.x && t.y === item.y)
-    );
+    )
+    .map((item) => ({ x: item.y, y: item.x, alive: false }));
 
   return area;
 }
